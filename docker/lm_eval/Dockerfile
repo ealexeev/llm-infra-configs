@@ -28,7 +28,7 @@ ENV RAY_CGRAPH_get_timeout=1200
 ENV HF_HUB_OFFLINE=1
 
 # Install ray cluster start up script.
-COPY --chmod=755 start_ray.sh /usr/local/bin/
+COPY --chmod=755 common/start_ray.sh /usr/local/bin/
 
 # DGX Spark CPU count
 ENV NUMEXPR_MAX_THREADS=20

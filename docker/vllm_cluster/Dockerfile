@@ -27,7 +27,7 @@ ENV HF_HUB_OFFLINE=1
 RUN apt-get update && apt-get install -y libgl1 && rm -rf /var/lib/apt/lists/*
 
 # Install ray cluster start up script.
-COPY --chmod=755 start_ray.sh /usr/local/bin/
+COPY --chmod=755 common/start_ray.sh /usr/local/bin/
 
 # DGX Spark CPU count
 ENV NUMEXPR_MAX_THREADS=20
