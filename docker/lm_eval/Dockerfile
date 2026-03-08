@@ -8,6 +8,7 @@ RUN pip install -U dill evaluate jsonlines more_itertools numexpr peft pybind11 
 
 # Faster vLLM loading: https://docs.vllm.ai/en/v0.9.2/models/extensions/fastsafetensor.html
 ENV USE_FASTSAFETENSOR=true
+ENV SAFETENSORS_FAST_GPU=1
 
 # NCCL interface ids to define interconnect
 
@@ -23,10 +24,17 @@ ENV NCCL_DEBUG_FILE="/tmp/nccl_debug.log"
 # Ray extended timeout
 ENV RAY_CGRAPH_get_timeout=1200
 
+# Force huggingface to not DL anything, this should not happen from within a container
+ENV HF_HUB_OFFLINE=1
+
 # Install ray cluster start up script.
 COPY --chmod=755 start_ray.sh /usr/local/bin/
 
+# DGX Spark CPU count
 ENV NUMEXPR_MAX_THREADS=20
+
+# Default value to start as a non-head node
+ENV RAY_NODE_TYPE="other"
 
 ENTRYPOINT [ "/usr/local/bin/start_ray.sh", "start"]
 
